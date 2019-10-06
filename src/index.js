@@ -8,7 +8,7 @@ let mongoose = require('mongoose');
 let app = express();
 
 // Import routes
-let apiRoutes = require("./routes");
+let apiRoutes = require("./routes/routes");
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
