@@ -28,7 +28,10 @@ else
 var port = process.env.PORT || 8080;
 
 // Send message for default URL
-app.get('/', (req, res) => res.send('Hello World with Express'));
+var swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Use Api routes in the App
 app.use('/api', apiRoutes);
