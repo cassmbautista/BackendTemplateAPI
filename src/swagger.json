@@ -9,8 +9,6 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:8080",
-  "basePath": "/",
   "tags": [
     {
       "name": "People",
@@ -48,7 +46,7 @@
         ],
         "responses": {
           "200": {
-            "description": "New people is created",
+            "description": "New person is created",
             "schema": {
               "$ref": "#/definitions/People"
             }
@@ -84,7 +82,7 @@
         "tags": [
           "People"
         ],
-        "summary": "Get people with given ID",
+        "summary": "Get person with given ID",
         "responses": {
           "200": {
             "description": "People is found",
@@ -95,7 +93,7 @@
         }
       },
       "delete": {
-        "summary": "Delete people with given ID",
+        "summary": "Delete person with given ID",
         "tags": [
           "People"
         ],
@@ -109,7 +107,7 @@
         }
       },
       "put": {
-        "summary": "Update people with give ID",
+        "summary": "Update person with give ID",
         "tags": [
           "People"
         ],
@@ -125,7 +123,7 @@
         ],
         "responses": {
           "200": {
-            "description": "People is updated",
+            "description": "Person is updated",
             "schema": {
               "$ref": "#/definitions/People"
             }
