@@ -6,7 +6,7 @@ let PeopleModel = require('../models/peopleModel');
 exports.get = function (req, res) {
     PeopleModel.get(function (err, people) {
         if (err) {
-            res.json({
+            return res.json({
                 status: "error",
                 message: err,
             });
@@ -33,7 +33,7 @@ exports.post = function (req, res) {
     // save the people and check for errors
     person.save(function (err) {
         if (err)
-            res.send(err);
+            return res.send(err);
         res.json({
             message: 'New person created!',
             data: person
@@ -46,7 +46,7 @@ exports.post = function (req, res) {
 exports.getById = function (req, res) {
     PeopleModel.findById(req.params.id, function (err, people) {
         if (err)
-            res.send(err);
+            return res.send(err);
         res.json({
             message: 'Person retrieved successfully',
             data: people
@@ -57,20 +57,26 @@ exports.getById = function (req, res) {
 
 // Handle update people info
 exports.put = function (req, res) {
-People.findById(req.params.id, function (err, person) {
-        if (err)
-            res.send(err);
+    PeopleModel.findById(req.params.id, function (err, person) {
+        if (err) {
+            return res.send(err);
+        }
+        if(!person) {
+            return res.json({
+                message: 'Person does not exist'
+            });
+        }
 
         person.name = req.body.name ? req.body.name : person.name;
         person.gender = req.body.gender;
-        person.email = req.body.email;
+        person.email = req.body.email ? req.body.email : person.email;
         person.phone = req.body.phone;
         person.groups = req.body.groups;
 
         // save the people and check for errors
         person.save(function (err) {
             if (err)
-                res.json(err);
+                return res.json(err);
             res.json({
                 message: 'People Info updated',
                 data: person
@@ -86,7 +92,7 @@ exports.delete = function (req, res) {
         _id: req.params.id
     }, function (err, people) {
         if (err)
-            res.send(err);
+            return res.send(err);
         res.json({
             status: "success",
             message: 'People deleted'
