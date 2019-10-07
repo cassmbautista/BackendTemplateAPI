@@ -1,20 +1,19 @@
 // Initialize express router
 let router = require('express').Router();
 
-// Import contact controller
-var contactController = require('../controllers/contactController');
-// Contact routes
-router.route('/contacts')
-    .get(contactController.index)
-    .post(contactController.new);
+// Import people controller
+let peopleController = require('../controllers/peopleController');
 
-router.route('/contacts/:contact_id')
-    .get(contactController.view)
-    .patch(contactController.update)
-    .put(contactController.update)
-    .delete(contactController.delete);
+// Setup People routes
+router.route('/people')
+    .get(peopleController.get)
+    .post(peopleController.post);
 
+router.route('/people/:id')
+    .get(peopleController.getById)
+    .put(peopleController.put)
+    .delete(peopleController.delete);
 
-    
+   
 // Export API routes
 module.exports = router;

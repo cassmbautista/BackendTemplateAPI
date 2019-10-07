@@ -1,41 +1,43 @@
-// Import express
 let express = require('express');
-// Import Body parser
 let bodyParser = require('body-parser');
-// Import Mongoose
 let mongoose = require('mongoose');
+let swaggerUi = require('swagger-ui-express');
+let swaggerDocument = require('./swagger.json');
+
 // Initialise the app
 let app = express();
 
 // Import routes
-let apiRoutes = require("./routes/routes");
+let router = require("./routes/routes");
+
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/resthub', { useNewUrlParser: true});
-var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/basicbackend', { useNewUrlParser: true});
+let db = mongoose.connection;
 
 // Added check for DB connection
-if(!db)
+if(!db){
     console.log("Error connecting db")
-else
+}
+else {
     console.log("Db connected successfully")
+}
 
-// Setup server port
-var port = process.env.PORT || 8080;
-
-// Send message for default URL
-var swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('./swagger.json');
-
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Set default URL to swagger api docs
+app.use(/^\/([^\/]+\.(html|css|js))?$/, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Use Api routes in the App
-app.use('/api', apiRoutes);
+app.use('/', router);
+
+// Setup server port
+let port = process.env.PORT || 8080;
+
 // Launch app to listen to specified port
 app.listen(port, function () {
-    console.log("Running RestHub on port " + port);
+    console.log("Running Basic Backend on port " + port);
 });

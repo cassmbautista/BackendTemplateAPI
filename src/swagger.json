@@ -2,19 +2,19 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Yet Another Node.js Blogg Application API",
-    "description": "Yet Another Node.js Blogg Application API",
+    "title": "Basic Backend API",
+    "description": "Basic Backend API",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:3000",
-  "basePath": "/api/v1",
+  "host": "localhost:8080",
+  "basePath": "/",
   "tags": [
     {
-      "name": "Users",
-      "description": "API for users in the system"
+      "name": "People",
+      "description": "API for people in the system"
     }
   ],
   "schemes": [
@@ -27,19 +27,19 @@
     "application/json"
   ],
   "paths": {
-    "/users": {
+    "/people": {
       "post": {
         "tags": [
-          "Users"
+          "People"
         ],
-        "description": "Create new user in system",
+        "description": "Create new person in system",
         "parameters": [
           {
-            "name": "user",
+            "name": "people",
             "in": "body",
-            "description": "User that we want to create",
+            "description": "People that we want to create",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         ],
@@ -48,86 +48,86 @@
         ],
         "responses": {
           "200": {
-            "description": "New user is created",
+            "description": "New people is created",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         }
       },
       "get": {
         "tags": [
-          "Users"
+          "People"
         ],
-        "summary": "Get all users in system",
+        "summary": "Get all people in system",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/People"
             }
           }
         }
       }
     },
-    "/users/{userId}": {
+    "/people/{id}": {
       "parameters": [
         {
-          "name": "userId",
+          "name": "id",
           "in": "path",
           "required": true,
-          "description": "ID of user that we want to find",
+          "description": "ID of people that we want to find",
           "type": "string"
         }
       ],
       "get": {
         "tags": [
-          "Users"
+          "People"
         ],
-        "summary": "Get user with given ID",
+        "summary": "Get people with given ID",
         "responses": {
           "200": {
-            "description": "User is found",
+            "description": "People is found",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         }
       },
       "delete": {
-        "summary": "Delete user with given ID",
+        "summary": "Delete people with given ID",
         "tags": [
-          "Users"
+          "People"
         ],
         "responses": {
           "200": {
-            "description": "User is deleted",
+            "description": "People is deleted",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         }
       },
       "put": {
-        "summary": "Update user with give ID",
+        "summary": "Update people with give ID",
         "tags": [
-          "Users"
+          "People"
         ],
         "parameters": [
           {
-            "name": "user",
+            "name": "people",
             "in": "body",
-            "description": "User with new values of properties",
+            "description": "People with new values of properties",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "User is updated",
+            "description": "People is updated",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/People"
             }
           }
         }
@@ -135,8 +135,9 @@
     }
   },
   "definitions": {
-    "User": {
+    "People": {
       "required": [
+        "name",
         "email",
         "_id"
       ],
@@ -145,21 +146,27 @@
           "type": "string",
           "uniqueItems": true
         },
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        },
         "email": {
           "type": "string",
           "uniqueItems": true
         },
-        "lastName": {
+        "gender": {
           "type": "string"
         },
-        "firstName": {
+        "phone": {
           "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
-    },
-    "Users": {
-      "type": "array",
-      "$ref": "#/definitions/User"
     }
   }
 }
